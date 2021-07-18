@@ -23,6 +23,7 @@ describe("GET / - a simple api endpoint", () => {
         WeightKg: 80,
         bmi: 24,
         risk: "Low_risk",
+        category: "Normal weight",
       },
     });
   });

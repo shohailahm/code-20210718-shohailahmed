@@ -1,4 +1,4 @@
-import { riskFactor } from "../utils";
+import { getCategory, riskFactor } from "../utils";
 import { join } from "path";
 
 import { BMIPERSON, DATASET } from "../controllers/bmiController";
@@ -12,7 +12,8 @@ export class BMI {
   constructor() {}
 
   async getBMI(data: BMIPERSON): Promise<DATASET> {
-    const heightInMetersSquare = (data.HeightCm / 100) * (data.HeightCm / 100);
+    const heightInMetersSquare: number =
+      (data.HeightCm / 100) * (data.HeightCm / 100);
     const calculatedBMI: number = Math.round(
       data.WeightKg / heightInMetersSquare
     );
@@ -21,6 +22,7 @@ export class BMI {
       ...data,
       bmi: calculatedBMI,
       risk: riskFactor(calculatedBMI),
+      category: getCategory(calculatedBMI),
     } as DATASET;
 
     list.push(DATA);
@@ -30,9 +32,9 @@ export class BMI {
   }
 
   async getTotalCountOfOverWeight(): Promise<number> {
-    let data: any = db.get("persons").value() || [];
+    let data: DATASET[] = db.get("persons").value();
     return data && data.length > 0
-      ? data.filter((cur: DATASET) => cur.risk === "very_high_risk").length
+      ? data.filter((cur: DATASET) => cur.bmi > 25).length
       : 0;
   }
 }

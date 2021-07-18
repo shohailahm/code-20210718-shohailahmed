@@ -13,6 +13,7 @@ export interface DATASET {
   WeightKg: number;
   bmi: number;
   risk: string;
+  category: string;
 }
 
 export const bmiCalculator = async (req: Request, res: Response) => {

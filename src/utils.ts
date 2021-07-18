@@ -18,3 +18,20 @@ export const riskFactor = (BMI: number): string => {
       return "malnutrition_risk";
   }
 };
+
+export const getCategory = (BMI: number): string => {
+  switch (true) {
+    case BMI >= 40:
+      return "Very severely obese";
+    case 35 <= BMI && BMI < 40:
+      return "Severely obese";
+    case 30 <= BMI && BMI < 35:
+      return "Moderately obese";
+    case 25 <= BMI && BMI < 30:
+      return "Overweight";
+    case 18.5 <= BMI && BMI < 25:
+      return "Normal weight";
+    default:
+      return "Underweight";
+  }
+};
